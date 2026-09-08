@@ -106,52 +106,80 @@ button {
   border-radius: 50%;
   pointer-events: none;
   z-index: 10000;
+  opacity: 0;
   transform: translate(-50%, -50%);
-  transition: opacity 0.3s ease, transform 0.1s ease-out;
+  transition: opacity 0.25s ease;
+  will-change: transform;
 }
 
 .cursor-lens {
   position: fixed;
   top: 0;
   left: 0;
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   border: 1px solid rgba(255, 255, 255, 0.4);
   border-radius: 50%;
   pointer-events: none;
   z-index: 9999;
+  opacity: 0;
   transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: width 0.3s var(--ease-cinematic), height 0.3s var(--ease-cinematic), border-color 0.3s ease, background 0.3s ease;
+  transition: opacity 0.25s ease, width 0.25s var(--ease-cinematic), height 0.25s var(--ease-cinematic), background-color 0.25s ease, border-color 0.25s ease;
+  will-change: transform;
 }
 
 .cursor-label {
   font-family: var(--font-mono);
   font-size: 8px;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.14em;
   color: var(--bg-primary);
   opacity: 0;
-  font-weight: 500;
+  font-weight: 600;
   pointer-events: none;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.15s ease;
+  text-transform: uppercase;
 }
 
+/* Hover state on any interactive element */
+.cursor-lens.is-hovering {
+  width: 44px;
+  height: 44px;
+  border-color: rgba(255, 255, 255, 0.75);
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Hover state when custom badge label is active */
+.cursor-lens.has-label,
 .cursor-lens.is-active {
-  width: 68px;
-  height: 68px;
-  background: var(--text-primary);
+  width: 58px;
+  height: 58px;
+  background-color: var(--text-primary);
   border-color: transparent;
 }
 
+.cursor-lens.has-label .cursor-label,
 .cursor-lens.is-active .cursor-label {
   opacity: 1;
 }
 
-/* Hide custom cursor on mobile / non-fine pointers */
-@media (hover: none) and (pointer: coarse) {
+/* Hide native OS cursor on desktop fine pointers */
+@media (hover: hover) and (pointer: fine) {
+  body,
+  a,
+  button,
+  [data-cursor],
+  input,
+  textarea,
+  select {
+    cursor: none !important;
+  }
+}
 
+/* Hide custom cursor completely on touch / mobile devices */
+@media (hover: none) or (pointer: coarse) {
   .cursor-dot,
   .cursor-lens {
     display: none !important;
@@ -1504,5 +1532,15 @@ a.coord-val:hover {
   .cursor-dot,
   .cursor-lens {
     display: none !important;
+  }
+
+  body,
+  a,
+  button,
+  [data-cursor],
+  input,
+  textarea,
+  select {
+    cursor: auto !important;
   }
 }

@@ -251,48 +251,87 @@ function initCustomCursor() {
   let mouseY = -100;
   let lensX = -100;
   let lensY = -100;
+  let hasMoved = false;
+  let isVisible = false;
+  let hasActiveLabel = false;
 
+  // Instant dot tracking with zero latency
   window.addEventListener('mousemove', e => {
     mouseX = e.clientX;
     mouseY = e.clientY;
-    dot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
-  });
 
-  // Smooth lerp loop for outer lens
+    if (!hasMoved) {
+      hasMoved = true;
+      lensX = mouseX;
+      lensY = mouseY;
+    }
+
+    if (!isVisible) {
+      isVisible = true;
+      if (!hasActiveLabel) dot.style.opacity = '1';
+      lens.style.opacity = '1';
+    }
+
+    dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+  }, { passive: true });
+
+  // Smooth 60fps cinematic inertia loop for the outer lens
   function renderCursor() {
-    lensX += (mouseX - lensX) * 0.22;
-    lensY += (mouseY - lensY) * 0.22;
-
-    lens.style.transform = `translate(${lensX}px, ${lensY}px) translate(-50%, -50%)`;
+    if (hasMoved) {
+      lensX += (mouseX - lensX) * 0.24;
+      lensY += (mouseY - lensY) * 0.24;
+      lens.style.transform = `translate3d(${lensX}px, ${lensY}px, 0) translate(-50%, -50%)`;
+    }
     requestAnimationFrame(renderCursor);
   }
   requestAnimationFrame(renderCursor);
 
-  // Dynamic label & activation on hoverable elements
-  const interactiveElements = document.querySelectorAll('a, button, [data-cursor], .orbit-satellite');
-
-  interactiveElements.forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      const customTag = el.getAttribute('data-cursor') || 'VIEW';
-      label.textContent = customTag;
-      lens.classList.add('is-active');
-    });
-
-    el.addEventListener('mouseleave', () => {
-      lens.classList.remove('is-active');
-      label.textContent = '';
-    });
+  // Delegated hover detection (flicker-free, supports nested elements & dynamically revealed nodes)
+  document.addEventListener('mouseover', e => {
+    const interactive = e.target.closest('a, button, [data-cursor], .orbit-satellite');
+    if (interactive) {
+      const customTag = interactive.getAttribute('data-cursor');
+      if (customTag && customTag.trim() !== '') {
+        label.textContent = customTag;
+        lens.classList.add('has-label');
+        hasActiveLabel = true;
+        dot.style.opacity = '0'; // Hide center dot so the label badge is crystal clear
+      } else {
+        label.textContent = '';
+        lens.classList.remove('has-label');
+        hasActiveLabel = false;
+        if (isVisible) dot.style.opacity = '1';
+      }
+      lens.classList.add('is-hovering');
+    }
   });
 
-  // Hide cursor on leaving window
+  document.addEventListener('mouseout', e => {
+    const interactive = e.target.closest('a, button, [data-cursor], .orbit-satellite');
+    if (interactive) {
+      // Only deactivate if moving completely out of the interactive boundary (not into a child node)
+      if (!interactive.contains(e.relatedTarget)) {
+        lens.classList.remove('is-hovering', 'has-label');
+        label.textContent = '';
+        hasActiveLabel = false;
+        if (isVisible) dot.style.opacity = '1';
+      }
+    }
+  });
+
+  // Clean hide/show on window boundary transitions
   document.addEventListener('mouseleave', () => {
+    isVisible = false;
     dot.style.opacity = '0';
     lens.style.opacity = '0';
   });
 
   document.addEventListener('mouseenter', () => {
-    dot.style.opacity = '1';
-    lens.style.opacity = '1';
+    if (hasMoved) {
+      isVisible = true;
+      if (!hasActiveLabel) dot.style.opacity = '1';
+      lens.style.opacity = '1';
+    }
   });
 }
 
