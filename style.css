@@ -1310,19 +1310,26 @@ button {
 }
 
 .kar-monumental {
-  font-size: clamp(6rem, 18vw, 18rem);
-  font-weight: 700;
-  line-height: 0.9;
-  letter-spacing: -0.06em;
-  color: var(--text-primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   user-select: none;
-  margin-bottom: 2rem;
-  transition: opacity 0.3s ease, letter-spacing 0.5s var(--ease-cinematic);
+  margin-bottom: 2.5rem;
+  cursor: default;
 }
 
-.kar-monumental:hover {
-  letter-spacing: -0.04em;
-  color: #ffffff;
+.kar-monumental-logo {
+  width: clamp(180px, 24vw, 320px);
+  height: auto;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 0 35px rgba(255, 255, 255, 0.08));
+  transition: transform 0.5s var(--ease-cinematic), filter 0.5s ease;
+}
+
+.kar-monumental:hover .kar-monumental-logo {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 50px rgba(255, 255, 255, 0.2));
 }
 
 .kar-phonetic {
