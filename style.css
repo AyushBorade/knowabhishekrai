@@ -286,16 +286,21 @@ button {
 .nav-menu {
   display: flex;
   align-items: center;
-  gap: 2.5rem;
+  gap: 2.25rem;
 }
 
 .nav-link {
   font-family: var(--font-mono);
   font-size: 0.72rem;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   color: var(--text-secondary);
   position: relative;
-  padding: 0.25rem 0;
+  padding: 0.35rem 0;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
   transition: color 0.3s ease;
 }
 
@@ -310,12 +315,68 @@ button {
   transition: width 0.3s var(--ease-cinematic);
 }
 
+.nav-arrow {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  line-height: 1;
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
 .nav-link:hover {
   color: var(--text-primary);
 }
 
+.nav-link:hover .nav-arrow {
+  color: var(--text-primary);
+  transform: translate(2px, -2px);
+}
+
 .nav-link:hover::after {
   width: 100%;
+}
+
+/* Mobile Nav Toggle */
+.nav-toggle {
+  display: none;
+  background: transparent;
+  border: 1px solid var(--border-hairline);
+  color: var(--text-primary);
+  padding: 0.4rem 0.85rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  cursor: pointer;
+  align-items: center;
+  gap: 0.6rem;
+  transition: border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.nav-toggle:hover {
+  border-color: var(--border-strong);
+  background-color: var(--bg-elevated);
+}
+
+.toggle-icon {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 13px;
+}
+
+.toggle-bar {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: var(--text-primary);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.nav-toggle.is-active .toggle-bar:nth-child(1) {
+  transform: translateY(2.5px) rotate(45deg);
+}
+
+.nav-toggle.is-active .toggle-bar:nth-child(2) {
+  transform: translateY(-2.5px) rotate(-45deg);
 }
 
 /* --- Layout Containers & Badges --- */
@@ -1050,6 +1111,24 @@ button {
   justify-content: center;
   text-align: center;
   box-shadow: 0 0 35px rgba(255, 255, 255, 0.05);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.orbit-nucleus:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 45px rgba(255, 255, 255, 0.12);
+}
+
+.nucleus-logo {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.3s var(--ease-cinematic);
+}
+
+.orbit-nucleus:hover .nucleus-logo {
+  transform: scale(1.08);
 }
 
 .nucleus-callsign {
@@ -1077,6 +1156,9 @@ button {
   background-color: var(--bg-secondary);
   border: 1px solid var(--border-hairline);
   max-width: 240px;
+  text-decoration: none;
+  display: block;
+  color: inherit;
   transition: transform 0.3s var(--ease-cinematic), border-color 0.3s ease, background-color 0.3s ease;
   cursor: pointer;
 }
@@ -1087,12 +1169,30 @@ button {
   transform: scale(1.04);
 }
 
+.satellite-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.35rem;
+}
+
 .satellite-code {
   font-family: var(--font-mono);
   font-size: 0.65rem;
   letter-spacing: 0.18em;
   color: var(--text-muted);
-  margin-bottom: 0.35rem;
+}
+
+.satellite-arrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.orbit-satellite:hover .satellite-arrow {
+  color: var(--text-primary);
+  transform: translate(2px, -2px);
 }
 
 .satellite-title {
@@ -1378,6 +1478,44 @@ a.coord-val:hover {
   }
 }
 
+/* Mobile Navigation Breakpoint */
+@media (max-width: 860px) {
+  .nav-toggle {
+    display: inline-flex;
+  }
+
+  .nav-menu {
+    display: none;
+    position: fixed;
+    top: var(--nav-height);
+    left: 0;
+    width: 100%;
+    background-color: rgba(8, 8, 8, 0.98);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-bottom: 1px solid var(--border-strong);
+    padding: 1.5rem 1.75rem 2rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.85);
+    z-index: 901;
+  }
+
+  .nav-menu.is-open {
+    display: flex;
+  }
+
+  .nav-menu .nav-link {
+    width: 100%;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    font-size: 0.8rem;
+    letter-spacing: 0.14em;
+    border-bottom: 1px solid var(--border-hairline);
+  }
+}
+
 @media (max-width: 768px) {
   :root {
     --nav-height: 64px;
@@ -1408,15 +1546,6 @@ a.coord-val:hover {
 
   .site-header .header-inner {
     padding: 0 1.5rem;
-  }
-
-  .nav-menu {
-    gap: 1.25rem;
-  }
-
-  .nav-link {
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
   }
 
   /* Hero Mobile */

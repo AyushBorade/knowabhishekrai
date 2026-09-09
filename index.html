@@ -36,9 +36,6 @@
       <span class="hud-tag">REC ●</span>
       <span class="hud-mono" id="liveTimecode">TC 00:00:00:00</span>
     </div>
-    <div class="hud-item hud-tr">
-      <span class="hud-mono">24 FPS &nbsp;|&nbsp; 2.39:1 &nbsp;|&nbsp; MONO</span>
-    </div>
     <div class="hud-item hud-frame-indicator" id="hudFrameIndicator">
       <span class="hud-mono">FRAME // <span id="currentFrameNum">01</span> / 04</span>
     </div>
@@ -55,6 +52,39 @@
       <a href="#hero" class="brand-link" data-cursor="TOP" aria-label="knowabhishekrai">
         <img src="logo-header.png" alt="knowabhishekrai" class="nav-brand-logo" width="48" height="48">
       </a>
+
+      <!-- Mobile Menu Toggle Button -->
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" data-cursor="MENU">
+        <span class="toggle-label">MENU</span>
+        <span class="toggle-icon">
+          <span class="toggle-bar"></span>
+          <span class="toggle-bar"></span>
+        </span>
+      </button>
+
+      <!-- Top Right Menu: Production Houses -->
+      <nav class="nav-menu" id="headerNav" aria-label="Production Houses">
+        <a href="https://whitetigerfilms.in/" target="_blank" rel="noopener noreferrer" class="nav-link"
+          data-cursor="VISIT">
+          <span class="nav-link-name">WHITE TIGER FILMS</span>
+          <span class="nav-arrow">↗</span>
+        </a>
+        <a href="https://dooddlebooddle.com/" target="_blank" rel="noopener noreferrer" class="nav-link"
+          data-cursor="VISIT">
+          <span class="nav-link-name">DOODDLE BOODDLE</span>
+          <span class="nav-arrow">↗</span>
+        </a>
+        <a href="https://eclipticafilms.com/" target="_blank" rel="noopener noreferrer" class="nav-link"
+          data-cursor="VISIT">
+          <span class="nav-link-name">ECLIPTICA FILMS</span>
+          <span class="nav-arrow">↗</span>
+        </a>
+        <a href="https://www.thesetlabs.in/" target="_blank" rel="noopener noreferrer" class="nav-link"
+          data-cursor="VISIT">
+          <span class="nav-link-name">THESETLABS</span>
+          <span class="nav-arrow">↗</span>
+        </a>
+      </nav>
     </div>
   </header>
 
@@ -157,38 +187,53 @@
                 </svg>
 
                 <!-- Core Nucleus -->
-                <div class="orbit-nucleus">
-                  <span class="nucleus-callsign">KAR.</span>
-                  <span class="nucleus-sub">KNOW<br>ABHISHEK<br>RAI</span>
+                <div class="orbit-nucleus" data-cursor="KAR">
+                  <img src="logo-header.png" alt="knowabhishekrai logo" class="nucleus-logo" width="60" height="60">
                 </div>
 
                 <!-- Satellite 01: White Tiger Films -->
-                <div class="orbit-satellite sat-1" data-cursor="STUDIO">
-                  <div class="satellite-code">01 // PROD</div>
+                <a href="https://whitetigerfilms.in/" target="_blank" rel="noopener noreferrer"
+                  class="orbit-satellite sat-1" data-cursor="VISIT">
+                  <div class="satellite-header">
+                    <span class="satellite-code">01 // PROD</span>
+                    <span class="satellite-arrow">↗</span>
+                  </div>
                   <div class="satellite-title">WHITE TIGER FILMS</div>
                   <div class="satellite-desc">Production / Films</div>
-                </div>
+                </a>
 
                 <!-- Satellite 02: Dooddle Boodle -->
-                <div class="orbit-satellite sat-2" data-cursor="STUDIO">
-                  <div class="satellite-code">02 // POST</div>
+                <a href="https://dooddlebooddle.com/" target="_blank" rel="noopener noreferrer"
+                  class="orbit-satellite sat-2" data-cursor="VISIT">
+                  <div class="satellite-header">
+                    <span class="satellite-code">02 // POST</span>
+                    <span class="satellite-arrow">↗</span>
+                  </div>
                   <div class="satellite-title">DOODDLE BOODDLE</div>
                   <div class="satellite-desc">Post-production / Editorial</div>
-                </div>
+                </a>
 
                 <!-- Satellite 03: Ecliptica Films -->
-                <div class="orbit-satellite sat-3" data-cursor="STUDIO">
-                  <div class="satellite-code">03 // SYNTH</div>
+                <a href="https://eclipticafilms.com/" target="_blank" rel="noopener noreferrer"
+                  class="orbit-satellite sat-3" data-cursor="VISIT">
+                  <div class="satellite-header">
+                    <span class="satellite-code">03 // SYNTH</span>
+                    <span class="satellite-arrow">↗</span>
+                  </div>
                   <div class="satellite-title">ECLIPTICA FILMS</div>
                   <div class="satellite-desc">AI Film Production / Experimental Storytelling</div>
-                </div>
+                </a>
 
                 <!-- Satellite 04: TheSetLabs -->
-                <div class="orbit-satellite sat-4" data-cursor="STUDIO">
-                  <div class="satellite-code">04 // SPACE</div>
+                <a href="https://www.thesetlabs.in/" target="_blank" rel="noopener noreferrer"
+                  class="orbit-satellite sat-4" data-cursor="VISIT">
+                  <div class="satellite-header">
+                    <span class="satellite-code">04 // SPACE</span>
+                    <span class="satellite-arrow">↗</span>
+                  </div>
                   <div class="satellite-title">THESETLABS</div>
                   <div class="satellite-desc">Production Design / Visual Worlds</div>
-                </div>
+                </a>
               </div>
             </div>
           </section>
