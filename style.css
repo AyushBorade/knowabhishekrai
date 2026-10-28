@@ -573,6 +573,73 @@ button {
   box-sizing: border-box;
 }
 
+/* --- Brand Logo Rolling Marquee --- */
+.logo-marquee-strip {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: transparent;
+  padding: 4rem 0 3.5rem;
+  display: flex;
+  align-items: center;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  user-select: none;
+  cursor: default;
+}
+
+.logo-marquee-track {
+  display: flex;
+  align-items: center;
+  gap: clamp(3rem, 5.5vw, 6rem);
+  width: max-content;
+  will-change: transform;
+}
+
+.logo-marquee-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.logo-marquee-item img {
+  height: clamp(26px, 2.4vw, 36px);
+  width: auto;
+  max-width: 150px;
+  object-fit: contain;
+  opacity: 0.65;
+  filter: brightness(1);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  pointer-events: auto;
+}
+
+.logo-marquee-strip:hover .logo-marquee-item img {
+  opacity: 0.8;
+}
+
+.logo-marquee-item:hover img {
+  opacity: 1 !important;
+  transform: scale(1.08);
+}
+
+@media (max-width: 768px) {
+  .logo-marquee-strip {
+    padding: 2.5rem 0 2rem;
+    mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+  }
+
+  .logo-marquee-track {
+    gap: 2.75rem;
+  }
+
+  .logo-marquee-item img {
+    height: 24px;
+    max-width: 120px;
+  }
+}
+
 /* 01. ONE POINT OF CONTACT (THE ARCHITECTURE) */
 .section-advantage {
   padding: 10rem 0;
@@ -1611,15 +1678,89 @@ a.coord-val:hover {
     gap: 2rem;
   }
 
-  /* Horizontal Panels Mobile */
-  .horizontal-panel {
-    padding: 0 1.5rem;
+  /* ==========================================
+     MOBILE VIEW: PURE VERTICAL SCROLL (NO HORIZONTAL)
+     ========================================== */
+  .horizontal-scroll-container {
+    height: auto !important;
+    position: relative !important;
+    overflow: visible !important;
   }
 
-  .ecosystem-panel,
+  .horizontal-sticky-wrapper {
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    display: block !important;
+  }
+
+  .horizontal-track {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    height: auto !important;
+    transform: none !important;
+  }
+
+  .horizontal-panel {
+    position: relative !important;
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    border-left: none !important;
+    border-top: 1px solid var(--border-hairline) !important;
+    padding: 6rem 1.5rem !important;
+    box-sizing: border-box !important;
+  }
+
+  .horizontal-panel::before,
+  .horizontal-panel::after {
+    display: none !important;
+  }
+
+  .hero-panel {
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-end !important;
+    padding: 0 0 4rem 0 !important;
+    border-top: none !important;
+    border-left: none !important;
+  }
+
+  .idea-panel {
+    width: 100% !important;
+    min-width: 100% !important;
+    padding: 6rem 1.5rem !important;
+  }
+
+  .ecosystem-panel {
+    width: 100% !important;
+    min-width: 100% !important;
+    padding: 6rem 1.5rem !important;
+  }
+
   .manifesto-panel {
-    width: 100vw;
-    min-width: 100vw;
+    width: 100% !important;
+    min-width: 100% !important;
+    padding: 6rem 1.5rem !important;
+    background-color: var(--bg-secondary) !important;
+  }
+
+  .scroll-arrow {
+    transform: rotate(90deg);
   }
 
   /* Vertical Sections Mobile */

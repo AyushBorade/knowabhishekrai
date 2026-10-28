@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   initHeaderMenu();
+  initLogoMarquee();
 
   // Remove initial loading state
   document.body.classList.remove('is-loading');
@@ -88,14 +89,22 @@ function initHorizontalScroll(prefersReducedMotion) {
 
   if (!container || !track || !panels.length) return;
 
+  const mqlMobile = window.matchMedia('(max-width: 768px)');
   let maxScroll = 0;
   let targetX = 0;
   let currentX = 0;
   let isTicking = false;
   const ease = prefersReducedMotion ? 1 : 0.08; // Filmic inertia
 
-  // Calculate container height so vertical scroll drives full horizontal track length
+  // Calculate container height so vertical scroll drives full horizontal track length on desktop
   function updateDimensions() {
+    if (mqlMobile.matches) {
+      container.style.height = '';
+      track.style.transform = '';
+      maxScroll = 0;
+      return;
+    }
+
     const trackWidth = track.scrollWidth;
     const viewportWidth = window.innerWidth;
     maxScroll = Math.max(0, trackWidth - viewportWidth);
@@ -111,8 +120,9 @@ function initHorizontalScroll(prefersReducedMotion) {
     }
   }
 
-  // Also handle horizontal wheel gestures on trackpads
+  // Also handle horizontal wheel gestures on trackpads (desktop only)
   window.addEventListener('wheel', (e) => {
+    if (mqlMobile.matches) return;
     // If trackpad horizontal gesture is stronger than vertical, route to scroll while in reel
     if (Math.abs(e.deltaX) > Math.abs(e.deltaY) && Math.abs(e.deltaX) > 1 && window.scrollY <= maxScroll + 50) {
       window.scrollBy({ top: e.deltaX, behavior: 'auto' });
@@ -121,7 +131,34 @@ function initHorizontalScroll(prefersReducedMotion) {
 
   // Main Render Loop (Linear Interpolation)
   function renderLoop() {
-    // Only lerp the horizontal target up to maxScroll
+    if (mqlMobile.matches) {
+      // Mobile: pure vertical scroll flow (no horizontal translate)
+      track.style.transform = '';
+
+      if (progressBar) {
+        const totalDocScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+        const overallProgress = Math.min(1, Math.max(0, window.scrollY / totalDocScroll));
+        progressBar.style.transform = `scaleX(${overallProgress})`;
+      }
+
+      if (frameIndicator) {
+        const allSections = document.querySelectorAll('.horizontal-panel, .vertical-section');
+        let currentIdx = 1;
+        allSections.forEach((sec, idx) => {
+          const rect = sec.getBoundingClientRect();
+          if (rect.top <= window.innerHeight * 0.5 && rect.bottom >= 0) {
+            currentIdx = idx + 1;
+          }
+        });
+        frameIndicator.textContent = String(currentIdx).padStart(2, '0');
+      }
+
+      checkReveals();
+      isTicking = false;
+      return;
+    }
+
+    // Desktop Horizontal Reel: Only lerp the horizontal target up to maxScroll
     const horizontalTarget = Math.min(maxScroll, Math.max(0, targetX));
     const diff = horizontalTarget - currentX;
 
@@ -207,6 +244,15 @@ function initHorizontalScroll(prefersReducedMotion) {
       const targetEl = document.querySelector(href);
       if (targetEl) {
         e.preventDefault();
+        if (mqlMobile.matches) {
+          const targetScroll = targetEl.getBoundingClientRect().top + window.scrollY;
+          window.scrollTo({
+            top: targetScroll,
+            behavior: 'smooth'
+          });
+          return;
+        }
+
         let targetScroll = 0;
         if (targetEl.closest('.horizontal-track')) {
           targetScroll = targetEl.offsetLeft;
@@ -228,6 +274,20 @@ function initHorizontalScroll(prefersReducedMotion) {
     updateDimensions();
     onScroll();
   }, { passive: true });
+
+  if (mqlMobile.addEventListener) {
+    mqlMobile.addEventListener('change', () => {
+      updateDimensions();
+      checkReveals();
+      onScroll();
+    });
+  } else if (mqlMobile.addListener) {
+    mqlMobile.addListener(() => {
+      updateDimensions();
+      checkReveals();
+      onScroll();
+    });
+  }
 
   // Initial calculations and reveal triggers
   updateDimensions();
@@ -432,4 +492,89 @@ function initHeaderMenu() {
     }
   });
 }
+
+/**
+ * 8. Logo Marquee (Brand Collaborations)
+ * Smooth velocity-based rolling strip with inertial pause on hover & resume on dehover
+ */
+function initLogoMarquee() {
+  const strip = document.getElementById('logoMarqueeStrip');
+  const track = document.getElementById('logoMarqueeTrack');
+  if (!strip || !track) return;
+
+  const normalSpeed = 0.85; // Base rolling speed (pixels per animation frame)
+  let currentSpeed = normalSpeed;
+  let targetSpeed = normalSpeed;
+  let currentX = 0;
+  let rafId = null;
+
+  function getHalfWidth() {
+    return track.scrollWidth / 2;
+  }
+
+  let halfWidth = getHalfWidth();
+
+  window.addEventListener('resize', () => {
+    halfWidth = getHalfWidth();
+  }, { passive: true });
+
+  // Smooth hover deceleration to stop
+  strip.addEventListener('mouseenter', () => {
+    targetSpeed = 0;
+  });
+
+  // Smooth dehover acceleration back to normal speed
+  strip.addEventListener('mouseleave', () => {
+    targetSpeed = normalSpeed;
+  });
+
+  // Touch support for mobile devices
+  strip.addEventListener('touchstart', () => {
+    targetSpeed = 0;
+  }, { passive: true });
+
+  strip.addEventListener('touchend', () => {
+    targetSpeed = normalSpeed;
+  }, { passive: true });
+
+  function step() {
+    // Smooth inertial lerp (exponential smoothing factor 0.05)
+    currentSpeed += (targetSpeed - currentSpeed) * 0.05;
+
+    // Advance position
+    currentX -= currentSpeed;
+
+    // Seamless wrap when 1 full set of logos has scrolled past
+    if (Math.abs(currentX) >= halfWidth && halfWidth > 0) {
+      currentX += halfWidth;
+    }
+
+    track.style.transform = `translate3d(${currentX}px, 0, 0)`;
+
+    rafId = requestAnimationFrame(step);
+  }
+
+  // Only animate when visible on screen to conserve performance
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          if (!rafId) {
+            rafId = requestAnimationFrame(step);
+          }
+        } else {
+          if (rafId) {
+            cancelAnimationFrame(rafId);
+            rafId = null;
+          }
+        }
+      });
+    }, { rootMargin: '150px 0px' });
+
+    observer.observe(strip);
+  } else {
+    rafId = requestAnimationFrame(step);
+  }
+}
+
 
