@@ -675,7 +675,7 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 8rem 0 1.5rem 0;
+  padding: 8rem 0 0 0;
   background-color: var(--bg-primary);
 }
 
@@ -699,7 +699,7 @@ button {
 
 .section-contact .site-footer {
   border-top: 1px solid var(--border-hairline);
-  padding: 2.5rem 0 1.5rem 0;
+  padding: 2.5rem 0 0.75rem 0;
   margin-top: 6rem;
   width: 100%;
 }
@@ -1421,7 +1421,7 @@ button {
    ========================================================================== */
 .section-contact {
   border-top: 1px solid var(--border-hairline);
-  padding-bottom: 10rem;
+  padding-bottom: 3rem;
 }
 
 .contact-box {
@@ -1508,7 +1508,7 @@ a.coord-val:hover {
    ========================================================================== */
 .site-footer {
   border-top: 1px solid var(--border-hairline);
-  padding: 3rem 0 3.5rem 0;
+  padding: 3rem 0 1.75rem 0;
   font-family: var(--font-mono);
   font-size: 0.72rem;
   letter-spacing: 0.14em;
@@ -1533,6 +1533,48 @@ a.coord-val:hover {
 
 .footer-creed {
   color: var(--text-muted);
+}
+
+.footer-bottom {
+  width: 100%;
+  max-width: var(--content-max-width);
+  margin: 1.75rem auto 0;
+  padding: 1.25rem 3rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-dev-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.25s var(--ease-smooth);
+}
+
+.footer-dev-link .dev-label {
+  color: var(--text-muted);
+}
+
+.footer-dev-link .dev-name {
+  color: var(--text-secondary);
+  border-bottom: 1px dotted rgba(255, 255, 255, 0.25);
+  transition: color 0.25s var(--ease-smooth), border-color 0.25s var(--ease-smooth);
+}
+
+.footer-dev-link:hover .dev-label {
+  color: var(--text-secondary);
+}
+
+.footer-dev-link:hover .dev-name {
+  color: var(--text-primary);
+  border-bottom-color: var(--text-primary);
 }
 
 /* ==========================================================================
@@ -1843,9 +1885,12 @@ a.coord-val:hover {
     line-height: 1.45;
   }
 
-  .section-kar,
-  .section-contact {
+  .section-kar {
     padding: 6rem 0;
+  }
+
+  .section-contact {
+    padding: 6rem 0 0 0;
   }
 
   .hud-frame-indicator {
@@ -1859,6 +1904,12 @@ a.coord-val:hover {
     align-items: flex-start;
     gap: 1rem;
     padding: 0 1.5rem;
+  }
+
+  .footer-bottom {
+    margin-top: 1.25rem;
+    padding: 1rem 1.5rem 0;
+    justify-content: flex-start;
   }
 }
 

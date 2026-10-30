@@ -490,7 +490,7 @@ img {
 .site-footer {
     background-color: #060606;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 3rem 0 3.5rem 0;
+    padding: 3rem 0 1.75rem 0;
     font-family: var(--font-mono);
     font-size: 0.72rem;
     letter-spacing: 0.14em;
@@ -520,6 +520,48 @@ img {
 
 .footer-copy {
     color: #555555;
+}
+
+.footer-bottom {
+    width: 100%;
+    max-width: var(--content-max-width);
+    margin: 1.75rem auto 0;
+    padding: 1.25rem 3rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-dev-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    color: #555555;
+    text-decoration: none;
+    transition: color 0.25s ease;
+}
+
+.footer-dev-link .dev-label {
+    color: #555555;
+}
+
+.footer-dev-link .dev-name {
+    color: #909090;
+    border-bottom: 1px dotted rgba(255, 255, 255, 0.25);
+    transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.footer-dev-link:hover .dev-label {
+    color: #909090;
+}
+
+.footer-dev-link:hover .dev-name {
+    color: #f4f4f4;
+    border-bottom-color: #f4f4f4;
 }
 
 
@@ -575,6 +617,12 @@ img {
         align-items: flex-start;
         gap: 1rem;
         padding: 0 1.5rem;
+    }
+
+    .footer-bottom {
+        margin-top: 1.25rem;
+        padding: 1rem 1.5rem 0;
+        justify-content: flex-start;
     }
 }
 
