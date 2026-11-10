@@ -89,22 +89,14 @@ function initHorizontalScroll(prefersReducedMotion) {
 
   if (!container || !track || !panels.length) return;
 
-  const mqlMobile = window.matchMedia('(max-width: 768px)');
   let maxScroll = 0;
   let targetX = 0;
   let currentX = 0;
   let isTicking = false;
   const ease = prefersReducedMotion ? 1 : 0.08; // Filmic inertia
 
-  // Calculate container height so vertical scroll drives full horizontal track length on desktop
+  // Calculate container height so vertical scroll drives full horizontal track length
   function updateDimensions() {
-    if (mqlMobile.matches) {
-      container.style.height = '';
-      track.style.transform = '';
-      maxScroll = 0;
-      return;
-    }
-
     const trackWidth = track.scrollWidth;
     const viewportWidth = window.innerWidth;
     maxScroll = Math.max(0, trackWidth - viewportWidth);
@@ -120,9 +112,8 @@ function initHorizontalScroll(prefersReducedMotion) {
     }
   }
 
-  // Also handle horizontal wheel gestures on trackpads (desktop only)
+  // Also handle horizontal wheel gestures on trackpads
   window.addEventListener('wheel', (e) => {
-    if (mqlMobile.matches) return;
     // If trackpad horizontal gesture is stronger than vertical, route to scroll while in reel
     if (Math.abs(e.deltaX) > Math.abs(e.deltaY) && Math.abs(e.deltaX) > 1 && window.scrollY <= maxScroll + 50) {
       window.scrollBy({ top: e.deltaX, behavior: 'auto' });
@@ -131,34 +122,7 @@ function initHorizontalScroll(prefersReducedMotion) {
 
   // Main Render Loop (Linear Interpolation)
   function renderLoop() {
-    if (mqlMobile.matches) {
-      // Mobile: pure vertical scroll flow (no horizontal translate)
-      track.style.transform = '';
-
-      if (progressBar) {
-        const totalDocScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-        const overallProgress = Math.min(1, Math.max(0, window.scrollY / totalDocScroll));
-        progressBar.style.transform = `scaleX(${overallProgress})`;
-      }
-
-      if (frameIndicator) {
-        const allSections = document.querySelectorAll('.horizontal-panel, .vertical-section');
-        let currentIdx = 1;
-        allSections.forEach((sec, idx) => {
-          const rect = sec.getBoundingClientRect();
-          if (rect.top <= window.innerHeight * 0.5 && rect.bottom >= 0) {
-            currentIdx = idx + 1;
-          }
-        });
-        frameIndicator.textContent = String(currentIdx).padStart(2, '0');
-      }
-
-      checkReveals();
-      isTicking = false;
-      return;
-    }
-
-    // Desktop Horizontal Reel: Only lerp the horizontal target up to maxScroll
+    // Only lerp the horizontal target up to maxScroll
     const horizontalTarget = Math.min(maxScroll, Math.max(0, targetX));
     const diff = horizontalTarget - currentX;
 
@@ -244,15 +208,6 @@ function initHorizontalScroll(prefersReducedMotion) {
       const targetEl = document.querySelector(href);
       if (targetEl) {
         e.preventDefault();
-        if (mqlMobile.matches) {
-          const targetScroll = targetEl.getBoundingClientRect().top + window.scrollY;
-          window.scrollTo({
-            top: targetScroll,
-            behavior: 'smooth'
-          });
-          return;
-        }
-
         let targetScroll = 0;
         if (targetEl.closest('.horizontal-track')) {
           targetScroll = targetEl.offsetLeft;
@@ -274,20 +229,6 @@ function initHorizontalScroll(prefersReducedMotion) {
     updateDimensions();
     onScroll();
   }, { passive: true });
-
-  if (mqlMobile.addEventListener) {
-    mqlMobile.addEventListener('change', () => {
-      updateDimensions();
-      checkReveals();
-      onScroll();
-    });
-  } else if (mqlMobile.addListener) {
-    mqlMobile.addListener(() => {
-      updateDimensions();
-      checkReveals();
-      onScroll();
-    });
-  }
 
   // Initial calculations and reveal triggers
   updateDimensions();
