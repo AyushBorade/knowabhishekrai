@@ -1339,15 +1339,15 @@ img {
     width: 100%;
     padding: 12px 14px;
     font-family: var(--font-main);
-    font-size: 14px;
+    font-size: 16px;
     color: #111111;
     background-color: #fafafa;
     border: 1px solid rgba(17, 17, 17, 0.2);
     border-radius: 0;
     outline: none;
     transition: border-color 0.2s ease, background-color 0.2s ease;
-    appearance: none;
     -webkit-appearance: none;
+    appearance: none;
 }
 
 .form-input::placeholder {
