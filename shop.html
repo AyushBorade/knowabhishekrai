@@ -119,6 +119,105 @@
             <img src="shop-page-05.jpg" alt="03 — Sound That Speaks" class="shop-page-img" loading="lazy">
         </section>
 
+        <!-- Order / Sign Up Form (Synced to Google Forms) -->
+        <section class="shop-form-section" id="humbleOrderFormSection" aria-label="HUMBLE. Order and Sign Up Form">
+            <div class="shop-form-container">
+                <div class="shop-form-header">
+                    <span class="shop-form-eyebrow">ISSUE 01 • VOL 01 // SIGN UP</span>
+                    <h2 class="shop-form-title">HUMBLE.</h2>
+                    <p class="shop-form-subtitle">
+                        HUMBLE. is a collection of visuals created by knowabhishekrai. Enter your details to sign up.
+                    </p>
+                </div>
+
+                <iframe name="hiddenGoogleFormTarget" id="hiddenGoogleFormTarget" class="sr-only-iframe"
+                    title="Form submission target" aria-hidden="true" tabindex="-1"></iframe>
+
+                <form id="humbleOrderForm" class="shop-form"
+                    action="https://docs.google.com/forms/d/e/1FAIpQLSdRM_xsXuWBiarmpbqFfol4v1lD4aMMRSQRrG-eFnIfkDEZJA/formResponse"
+                    method="POST" target="hiddenGoogleFormTarget" novalidate>
+
+                    <input type="hidden" name="fvv" value="1">
+                    <input type="hidden" name="pageHistory" value="0">
+
+                    <div class="form-grid">
+                        <div class="form-field">
+                            <label for="firstName" class="form-label">First Name <span class="req">*</span></label>
+                            <input type="text" id="firstName" name="entry.1442059944" class="form-input"
+                                autocomplete="given-name" placeholder="First Name" required>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="lastName" class="form-label">Last Name <span class="req">*</span></label>
+                            <input type="text" id="lastName" name="entry.103207302" class="form-input"
+                                autocomplete="family-name" placeholder="Last Name" required>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="phone" class="form-label">Phone <span class="req">*</span></label>
+                            <input type="tel" id="phone" name="entry.1166974658" class="form-input"
+                                autocomplete="tel" placeholder="+91 00000 00000" required>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="email" class="form-label">Email <span class="req">*</span></label>
+                            <input type="email" id="email" name="entry.1045781291" class="form-input"
+                                autocomplete="email" placeholder="you@example.com" required>
+                        </div>
+
+                        <div class="form-field form-field-full">
+                            <label for="address" class="form-label">Address <span class="req">*</span></label>
+                            <input type="text" id="address" name="entry.822555300" class="form-input"
+                                autocomplete="street-address" placeholder="Street address, apartment, suite" required>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="city" class="form-label">City <span class="req">*</span></label>
+                            <input type="text" id="city" name="entry.1418579611" class="form-input"
+                                autocomplete="address-level2" placeholder="City" required>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="zipCode" class="form-label">Zip/Postal Code <span class="req">*</span></label>
+                            <input type="text" id="zipCode" name="entry.1003888537" class="form-input"
+                                autocomplete="postal-code" placeholder="Postal / ZIP Code" required>
+                        </div>
+
+                        <div class="form-field form-field-full">
+                            <label for="country" class="form-label">Country/Region <span class="req">*</span></label>
+                            <input type="text" id="country" name="entry.2145875747" class="form-input"
+                                autocomplete="country-name" placeholder="Country / Region" required>
+                        </div>
+
+                        <div class="form-field form-field-full">
+                            <label for="humbleEdition" class="form-label">HUMBLE. <span class="req">*</span></label>
+                            <select id="humbleEdition" name="entry.839337160" class="form-input form-select" required>
+                                <option value="Issue 01 • Vol 01 (Includes 12 Photos) - ₹699.00" selected>
+                                    Issue 01 • Vol 01 (Includes 12 Photos) - ₹699.00
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <p class="form-error-msg" id="humbleFormError" role="alert" aria-live="polite"></p>
+
+                    <div class="form-actions">
+                        <button type="submit" id="humbleSubmitBtn" class="form-submit-btn">
+                            <span>SUBMIT</span>
+                            <span class="submit-arrow">→</span>
+                        </button>
+                    </div>
+                </form>
+
+                <div class="form-success-panel" id="humbleFormSuccess" hidden>
+                    <p class="success-badge">RECEIVED // HUMBLE.</p>
+                    <h3 class="success-heading">Thanks for submitting your contact info!</h3>
+                    <p class="success-subtext">Your details have been recorded for Issue 01 • Vol 01.</p>
+                    <button type="button" id="humbleResetBtn" class="form-reset-btn">SUBMIT ANOTHER RESPONSE</button>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <!-- Integrated Closing Footer -->

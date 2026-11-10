@@ -1243,3 +1243,230 @@ img {
         line-height: 1.55;
     }
 }
+
+
+/* =========================================
+   23. SHOP ORDER / SIGN UP FORM
+========================================= */
+
+.sr-only-iframe {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 0;
+    overflow: hidden;
+    visibility: hidden;
+}
+
+.shop-form-section {
+    width: 100%;
+    padding-top: clamp(32px, 5vw, 64px);
+    padding-bottom: clamp(24px, 4vw, 48px);
+    border-top: 1px solid rgba(17, 17, 17, 0.14);
+}
+
+.shop-form-container {
+    width: 100%;
+    max-width: 780px;
+    margin: 0 auto;
+}
+
+.shop-form-header {
+    margin-bottom: clamp(24px, 3.5vw, 40px);
+}
+
+.shop-form-eyebrow {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    color: #666666;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.shop-form-title {
+    font-family: var(--font-main);
+    font-size: clamp(28px, 3.5vw, 42px);
+    font-weight: 900;
+    letter-spacing: 0.03em;
+    line-height: 1.05;
+    color: #111111;
+    margin-bottom: 10px;
+}
+
+.shop-form-subtitle {
+    font-family: var(--font-main);
+    font-size: clamp(13px, 1.05vw, 15px);
+    line-height: 1.55;
+    color: #444444;
+    max-width: 560px;
+}
+
+.shop-form {
+    width: 100%;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 24px;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-field-full {
+    grid-column: 1 / -1;
+}
+
+.form-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #333333;
+}
+
+.form-label .req {
+    color: #111111;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px 14px;
+    font-family: var(--font-main);
+    font-size: 14px;
+    color: #111111;
+    background-color: #fafafa;
+    border: 1px solid rgba(17, 17, 17, 0.2);
+    border-radius: 0;
+    outline: none;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.form-input::placeholder {
+    color: #999999;
+}
+
+.form-input:focus {
+    background-color: #ffffff;
+    border-color: #111111;
+}
+
+.form-input.is-invalid {
+    border-color: #b91c1c;
+    background-color: #fef2f2;
+}
+
+.form-select {
+    cursor: pointer;
+    padding-right: 36px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23111111' d='M6 8.5L1.5 4h9z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+}
+
+.form-error-msg {
+    min-height: 1.2em;
+    margin-top: 14px;
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.04em;
+    color: #b91c1c;
+}
+
+.form-actions {
+    margin-top: 18px;
+}
+
+.form-submit-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 14px 32px;
+    background-color: #111111;
+    color: #ffffff;
+    border: 1px solid #111111;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.25s ease, color 0.25s ease, transform 0.2s ease;
+}
+
+.form-submit-btn:hover:not(:disabled) {
+    background-color: #ffffff;
+    color: #111111;
+}
+
+.form-submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.form-success-panel {
+    padding: clamp(28px, 4vw, 44px);
+    border: 1px solid rgba(17, 17, 17, 0.2);
+    background-color: #fafafa;
+}
+
+.success-badge {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    color: #555555;
+    margin-bottom: 10px;
+}
+
+.success-heading {
+    font-family: var(--font-main);
+    font-size: clamp(20px, 2.2vw, 26px);
+    font-weight: 700;
+    color: #111111;
+    margin-bottom: 8px;
+}
+
+.success-subtext {
+    font-family: var(--font-main);
+    font-size: 14px;
+    color: #444444;
+    margin-bottom: 22px;
+}
+
+.form-reset-btn {
+    padding: 10px 20px;
+    background: transparent;
+    border: 1px solid #111111;
+    color: #111111;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.form-reset-btn:hover {
+    background-color: #111111;
+    color: #ffffff;
+}
+
+@media (max-width: 640px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .form-submit-btn {
+        width: 100%;
+    }
+}
