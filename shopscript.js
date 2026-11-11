@@ -225,7 +225,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const params = new URLSearchParams();
             new FormData(form).forEach((value, key) => {
-                params.append(key, String(value).trim());
+                let clean = String(value).trim();
+                // Prevent Google Sheets from treating leading +, =, -, or @ (e.g. +91 phone) as a formula
+                if (/^[=+\-@]/.test(clean)) {
+                    clean = "'" + clean;
+                }
+                params.append(key, clean);
             });
 
             submitBtn.disabled = true;
