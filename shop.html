@@ -36,7 +36,7 @@
     <link rel="stylesheet" href="shopstyles.css?v=2">
 
     <!-- JavaScript -->
-    <script src="shopscript.js?v=2" defer></script>
+    <script src="shopscript.js?v=3" defer></script>
 </head>
 
 <body>
@@ -96,7 +96,8 @@
 
         <!-- Page 01: Magazine Cover -->
         <section class="shop-page-section" aria-label="Page 01 — HUMBLE. Cover">
-            <img src="shop-page-01.jpg" alt="HUMBLE. Issue 01, Volume 01 — Cover" class="shop-page-img" fetchpriority="high">
+            <img src="shop-page-01.jpg" alt="HUMBLE. Issue 01, Volume 01 — Cover" class="shop-page-img"
+                fetchpriority="high">
         </section>
 
         <!-- Page 02: About Author -->
@@ -123,75 +124,66 @@
         <section class="shop-form-section" id="humbleOrderFormSection" aria-label="HUMBLE. Order and Sign Up Form">
             <div class="shop-form-container">
                 <div class="shop-form-header">
-                    <span class="shop-form-eyebrow">ISSUE 01 • VOL 01 // SIGN UP</span>
                     <h2 class="shop-form-title">HUMBLE.</h2>
                     <p class="shop-form-subtitle">
                         HUMBLE. is a collection of visuals created by knowabhishekrai. Enter your details to sign up.
                     </p>
                 </div>
 
-                <iframe name="hiddenGoogleFormTarget" id="hiddenGoogleFormTarget" class="sr-only-iframe"
-                    title="Form submission target" aria-hidden="true" tabindex="-1"></iframe>
-
-                <form id="humbleOrderForm" class="shop-form"
-                    action="https://docs.google.com/forms/d/e/1FAIpQLSdRM_xsXuWBiarmpbqFfol4v1lD4aMMRSQRrG-eFnIfkDEZJA/formResponse"
-                    method="POST" target="hiddenGoogleFormTarget" novalidate>
-
-                    <input type="hidden" name="fvv" value="1">
-                    <input type="hidden" name="pageHistory" value="0">
+                <form id="humbleOrderForm" class="shop-form" novalidate>
 
                     <div class="form-grid">
                         <div class="form-field">
                             <label for="firstName" class="form-label">First Name <span class="req">*</span></label>
-                            <input type="text" id="firstName" name="entry.1442059944" class="form-input"
+                            <input type="text" id="firstName" name="firstName" class="form-input"
                                 autocomplete="given-name" placeholder="First Name" required>
                         </div>
 
                         <div class="form-field">
                             <label for="lastName" class="form-label">Last Name <span class="req">*</span></label>
-                            <input type="text" id="lastName" name="entry.103207302" class="form-input"
+                            <input type="text" id="lastName" name="lastName" class="form-input"
                                 autocomplete="family-name" placeholder="Last Name" required>
                         </div>
 
                         <div class="form-field">
                             <label for="phone" class="form-label">Phone <span class="req">*</span></label>
-                            <input type="tel" id="phone" name="entry.1166974658" class="form-input"
-                                autocomplete="tel" placeholder="+91 00000 00000" required>
+                            <input type="tel" id="phone" name="phone" class="form-input" autocomplete="tel"
+                                placeholder="+91 00000 00000" required>
                         </div>
 
                         <div class="form-field">
                             <label for="email" class="form-label">Email <span class="req">*</span></label>
-                            <input type="email" id="email" name="entry.1045781291" class="form-input"
+                            <input type="email" id="email" name="email" class="form-input"
                                 autocomplete="email" placeholder="you@example.com" required>
                         </div>
 
                         <div class="form-field form-field-full">
                             <label for="address" class="form-label">Address <span class="req">*</span></label>
-                            <input type="text" id="address" name="entry.822555300" class="form-input"
+                            <input type="text" id="address" name="address" class="form-input"
                                 autocomplete="street-address" placeholder="Street address, apartment, suite" required>
                         </div>
 
                         <div class="form-field">
                             <label for="city" class="form-label">City <span class="req">*</span></label>
-                            <input type="text" id="city" name="entry.1418579611" class="form-input"
+                            <input type="text" id="city" name="city" class="form-input"
                                 autocomplete="address-level2" placeholder="City" required>
                         </div>
 
                         <div class="form-field">
                             <label for="zipCode" class="form-label">Zip/Postal Code <span class="req">*</span></label>
-                            <input type="text" id="zipCode" name="entry.1003888537" class="form-input"
+                            <input type="text" id="zipCode" name="zipCode" class="form-input"
                                 autocomplete="postal-code" placeholder="Postal / ZIP Code" required>
                         </div>
 
                         <div class="form-field form-field-full">
                             <label for="country" class="form-label">Country/Region <span class="req">*</span></label>
-                            <input type="text" id="country" name="entry.2145875747" class="form-input"
+                            <input type="text" id="country" name="country" class="form-input"
                                 autocomplete="country-name" placeholder="Country / Region" required>
                         </div>
 
                         <div class="form-field form-field-full">
                             <label for="humbleEdition" class="form-label">HUMBLE. <span class="req">*</span></label>
-                            <select id="humbleEdition" name="entry.839337160" class="form-input form-select" required>
+                            <select id="humbleEdition" name="humbleEdition" class="form-input form-select" required>
                                 <option value="Issue 01 • Vol 01 (Includes 12 Photos) - ₹699.00" selected>
                                     Issue 01 • Vol 01 (Includes 12 Photos) - ₹699.00
                                 </option>
@@ -234,7 +226,8 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <a href="https://www.linkedin.com/in/ayush-borade-99b1931aa/" target="_blank" rel="noopener noreferrer" class="footer-dev-link" data-cursor="VISIT">
+            <a href="https://www.linkedin.com/in/ayush-borade-99b1931aa/" target="_blank" rel="noopener noreferrer"
+                class="footer-dev-link" data-cursor="VISIT">
                 <span class="dev-label">Developed By</span> <span class="dev-name">Ayush Borade</span>
             </a>
         </div>

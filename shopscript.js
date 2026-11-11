@@ -164,31 +164,20 @@ document.addEventListener("DOMContentLoaded", () => {
     initHeaderMenu();
 
     /* =========================================
-       HUMBLE. GOOGLE FORM SUBMISSION
+       HUMBLE. GOOGLE SHEET SUBMISSION (APPS SCRIPT)
     ========================================= */
 
     function initOrderForm() {
+        // Replace with your deployed Google Apps Script Web App URL (/exec)
+        const GOOGLE_SHEET_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbyxfxGQ_1pFsf6T9G6uSCG8WP964qff0YcjvPwfPtQY09QsArC3WOIq-gNJpdoaxfpBkA/exec';
+
         const form = document.getElementById('humbleOrderForm');
-        const iframe = document.getElementById('hiddenGoogleFormTarget');
         const submitBtn = document.getElementById('humbleSubmitBtn');
         const errorMsg = document.getElementById('humbleFormError');
         const successPanel = document.getElementById('humbleFormSuccess');
         const resetBtn = document.getElementById('humbleResetBtn');
 
-        if (!form || !iframe || !submitBtn || !successPanel) return;
-
-        let isSubmitting = false;
-        let fallbackTimer = null;
-
-        function finishSubmission() {
-            if (!isSubmitting) return;
-            isSubmitting = false;
-            clearTimeout(fallbackTimer);
-            form.hidden = true;
-            successPanel.hidden = false;
-            submitBtn.disabled = false;
-            submitBtn.querySelector('span').textContent = 'SUBMIT';
-        }
+        if (!form || !submitBtn || !successPanel) return;
 
         // Clear per-field error highlight on input
         form.querySelectorAll('.form-input').forEach(input => {
@@ -198,14 +187,10 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
 
-        iframe.addEventListener('load', () => {
-            if (isSubmitting) {
-                finishSubmission();
-            }
-        });
-
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
             if (errorMsg) errorMsg.textContent = '';
+
             const requiredInputs = form.querySelectorAll('[required]');
             let firstInvalid = null;
 
@@ -222,7 +207,6 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             if (firstInvalid) {
-                e.preventDefault();
                 if (errorMsg) {
                     errorMsg.textContent = firstInvalid.type === 'email' && firstInvalid.value.trim()
                         ? 'Please enter a valid email address.'
@@ -232,12 +216,47 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            isSubmitting = true;
+            if (!GOOGLE_SHEET_WEBAPP_URL || GOOGLE_SHEET_WEBAPP_URL.includes('PASTE_YOUR_APPS_SCRIPT')) {
+                if (errorMsg) {
+                    errorMsg.textContent = 'Google Sheet endpoint is not configured yet. Deploy the Apps Script Web App and paste its URL into shopscript.js.';
+                }
+                return;
+            }
+
+            const params = new URLSearchParams();
+            new FormData(form).forEach((value, key) => {
+                params.append(key, String(value).trim());
+            });
+
             submitBtn.disabled = true;
             submitBtn.querySelector('span').textContent = 'SUBMITTING...';
 
-            // Safety fallback if cross-origin iframe load event is suppressed
-            fallbackTimer = setTimeout(finishSubmission, 2500);
+            try {
+                const res = await fetch(GOOGLE_SHEET_WEBAPP_URL, {
+                    method: 'POST',
+                    body: params
+                });
+
+                if (!res.ok) {
+                    throw new Error(`Request failed with status ${res.status}`);
+                }
+
+                const data = await res.json();
+                if (data.result !== 'success') {
+                    throw new Error(data.error || 'Submission rejected');
+                }
+
+                form.hidden = true;
+                successPanel.hidden = false;
+            } catch (err) {
+                console.error('Sheet submission error:', err);
+                if (errorMsg) {
+                    errorMsg.textContent = 'Unable to submit right now. Please try again in a moment.';
+                }
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.querySelector('span').textContent = 'SUBMIT';
+            }
         });
 
         if (resetBtn) {
