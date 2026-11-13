@@ -699,7 +699,7 @@ button {
 
 .section-contact .site-footer {
   border-top: 1px solid var(--border-hairline);
-  padding: 2.5rem 0 0.75rem 0;
+  padding: 2.5rem 0 2.5rem 0;
   margin-top: 6rem;
   width: 100%;
 }
@@ -1823,6 +1823,12 @@ a.coord-val:hover {
     bottom: 1.25rem;
     right: 1.25rem;
     font-size: 8px;
+  }
+
+  .section-contact .site-footer,
+  .site-footer {
+    padding-top: 2rem;
+    padding-bottom: calc(4.75rem + env(safe-area-inset-bottom, 0px));
   }
 
   .footer-container {
